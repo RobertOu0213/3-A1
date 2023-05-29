@@ -1,0 +1,102 @@
+<div class="container search-bar d-flex justify-content-between mt-3">
+  <!-- search bar -->
+  <div class="search-bar-outer w-25">
+    <div class="search-bar-inner">
+      <form action="/search">
+
+        <div class="input-group">
+          <input
+            type="text"
+            name="keyword"
+            class="form-control"
+            placeholder="輸入餐廳、分類"
+            aria-label="Restaurant Name..."
+            value="{{keyword}}"
+            aria-describedby="search-button"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-major" type="submit" id="search-button"><i
+                class="fas fa-search"
+              ></i></button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  {{! dropdown button}}
+  <div class="dropdown">
+    <button
+      class="btn btn-secondary dropdown-toggle"
+      type="button"
+      id="dropdownMenuButton1"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      Sort
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+      <li><a class="dropdown-item" href="#">A->Z</a></li>
+      <li><a class="dropdown-item" href="#">Z->A</a></li>
+      <li><a class="dropdown-item" href="#">category</a></li>
+    </ul>
+  </div>
+</div>
+
+{{! restaurants list }}
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-10 col-12 mx-auto">
+      <div class="row row-cols-sm-3">
+        {{#each restaurants}}
+          <div class="column">
+
+            <a href="/restaurants/{{this.id}}" class="text-secondary">
+              <div class="card mb-1">
+                <img
+                  class="card-img-top"
+                  src="{{this.image}}"
+                  style="height: 200px"
+                />
+                <div class="card-body p-3">
+                  <h6 class="card-title mb-1">
+                    {{this.name}}</h6>
+                </div>
+
+                <div class="restaurant-category mb-1">
+                  <i class="fas fa-utensils pr-2"></i>
+                  {{this.category}}
+                </div>
+
+                <span>
+                  <i class="fas fa-star fa-xs"></i>
+                  {{this.rating}}
+                </span>
+              </div>
+
+            </a>
+            <div
+              class="d-flex p-2 mb-2 bd-highlight align-items-end justify-content-end"
+            >
+              <a class="m-1" href="/restaurants/{{this._id}}">Detail</a>
+              <a class="m-1" href="/restaurants/{{this._id}}/edit">Edit</a>
+              <form
+                class="m-1"
+                action="/restaurants/{{this._id}}?_method=DELETE"
+                method="post"
+              >
+                <button type="submit">Delete</button>
+              </form>
+            </div>
+
+          </div>
+
+        {{/each}}
+
+      </div>
+    </div>
+
+  </div>
+</div>
