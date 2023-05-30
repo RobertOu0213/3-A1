@@ -5,6 +5,7 @@ const port = 3000;
 const exphbs = require("express-handlebars");
 const methodOverride = require("method-override");
 const routes = require("./routes");
+const usePassport = require("./config/passport");
 
 require("./config/mongoose");
 
@@ -18,6 +19,8 @@ app.use(
     saveUninitialized: true,
   })
 );
+
+usePassport(app);
 
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
