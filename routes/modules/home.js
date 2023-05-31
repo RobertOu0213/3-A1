@@ -4,8 +4,10 @@ const Restaurants = require("../../models/restaurants");
 
 //瀏覽全部餐廳
 router.get("/", (req, res) => {
-  Restaurants.find()
+  const userId = req.user._id;
+  Restaurants.find({ userId })
     .lean()
+    .sort({ _id: "asc" })
     .then((restaurants) => {
       res.render("index", { restaurants });
     })
