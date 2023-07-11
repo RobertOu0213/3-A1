@@ -64,16 +64,6 @@ db.once("open", () => {
 
       return Restaurants.create(restaurant);
     })
-    // .then((user) => {
-    //   console.log(user);
-    //   const restaurant = [];
-    //   for (let i = 3; i < 6; i++) {
-    //     const userId = user[1]._id;
-    //     restaurantList[i].userId = userId;
-    //     restaurant.push(restaurantList[i]);
-    //   }
-    //   return Restaurants.create(restaurant);
-    // })
     .then(() => {
       console.log("done.");
       process.exit();
