@@ -16,8 +16,10 @@ router.get("/", (req, res) => {
 
 //搜尋keyword
 router.get("/search", (req, res) => {
-  Restaurants.find()
+  const userId = req.user._id;
+  Restaurants.find({ userId })
     .lean()
+    .sort({ _id: "asc" })
     .then((restaurant) => {
       const FilterRestaurant = restaurant.filter(
         (data) =>

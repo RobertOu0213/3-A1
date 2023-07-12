@@ -13,13 +13,12 @@ router.post(
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/users/login",
-    // failureMessage: true,
-    // failureFlash: true,
-  })
-  // (req, res) => {
-  //   const { email, password } = req.body;
-  //   User.findOne({ email }).then((user) => console.log(user));
-  // }
+    failureMessage: true,
+    failureFlash: true,
+  }),
+  (req, res) => {
+    req.flash("success_msg", "成功登入！");
+  }
 );
 
 router.get("/register", (req, res) => {

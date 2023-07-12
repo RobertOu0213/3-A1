@@ -11,31 +11,32 @@ module.exports = (app) => {
   // passReqToCallback: true;
 
   passport.use(
-    new LocalStrategy({ usernameField: "email" }, (email, password, done) => {
-      User.findOne({ email })
-        .then((user) => {
-          if (!user) {
-            return done(
-              null,
-              false,
-              { message: "That email is not registered!" }
-              // req.flash("error_messages", "email not found")
-            );
-          }
-          return bcrypt.compare(password, user.password).then((isMatch) => {
-            if (!isMatch) {
+    new LocalStrategy(
+      { usernameField: "email", passReqToCallback: true },
+      (req, email, password, done) => {
+        User.findOne({ email })
+          .then((user) => {
+            if (!user) {
               return done(
                 null,
                 false,
-                { message: "Email or Password incorrect." }
-                // req.flash("error_messages", "incorrect email or password！")
+                req.flash("warning_msg", "Incorrect email or password!")
               );
             }
-            return done(null, user);
-          });
-        })
-        .catch((err) => done(err, false));
-    })
+            return bcrypt.compare(password, user.password).then((isMatch) => {
+              if (!isMatch) {
+                return done(
+                  null,
+                  false,
+                  req.flash("warning_msg", "Incorrect email or password!")
+                );
+              }
+              return done(null, user);
+            });
+          })
+          .catch((err) => done(err, false));
+      }
+    )
   );
 
   passport.serializeUser((user, done) => {
